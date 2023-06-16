@@ -12,7 +12,16 @@ var setUpPassport = require("./setuppassport");
 //var routes = require("./routes");
 
 var app = express();
-mongoose.connect(params.DATABASECONNECTION);
+mongoose.connect(params.DATABASECONNECTION, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+}).then(() => {
+    console.log('Database connected');
+}).catch(err => {
+    console.log('Error connecting to the database', err);
+});
+
 setUpPassport();
 
 app.set("port", process.env.PORT || 3000);
